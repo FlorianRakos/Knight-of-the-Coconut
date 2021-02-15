@@ -4,30 +4,51 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class PlayerMovement : MonoBehaviour
+using RPG.Core;
+
+namespace RPG.Movement
 {
-    void Update()
-    {
-        UpdateAnimator();        
-    }
+    public class PlayerMovement : MonoBehaviour, IAction
+    {   
+        NavMeshAgent navMeshAgent;
+
+        private void Awake() {
+            navMeshAgent = GetComponent<NavMeshAgent>();
+        }
+
+
+        void Update()
+        {
+            UpdateAnimator();        
+        }
 
 
 
+        public void StartMoveAction(Vector3 destination) {
+            GetComponent<ActionScheduler>().StartAction(this);
+            MoveTo(destination);
 
+        }
 
-    public void MoveTo(Vector3 destination)
-    {
-        GetComponent<NavMeshAgent>().SetDestination(destination);
-    }
+        public void MoveTo(Vector3 destination)
+        {
+            navMeshAgent.isStopped = false;
+            navMeshAgent.SetDestination(destination);
+        }
 
-    private void UpdateAnimator()
-    {
-        Vector3 velocity = GetComponent<NavMeshAgent>().velocity;
-        Vector3 localVelocity = transform.InverseTransformDirection(velocity);
+        public void Cancel() {
+            navMeshAgent.isStopped = true;
+        }
 
-        float speed = localVelocity.z;
+        private void UpdateAnimator()
+        {
+            Vector3 velocity = GetComponent<NavMeshAgent>().velocity;
+            Vector3 localVelocity = transform.InverseTransformDirection(velocity);
 
-        GetComponentInChildren<Animator>().SetFloat("forwardSpeed", speed);
+            float speed = localVelocity.z;
 
+            GetComponentInChildren<Animator>().SetFloat("forwardSpeed", speed);
+
+        }
     }
 }
