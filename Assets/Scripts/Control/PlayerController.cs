@@ -10,12 +10,12 @@ namespace RPG.Control
     public class PlayerController : MonoBehaviour
     {
 
-    PlayerMovement playerMovement;
+    Mover playerMovement;
 
 
     void Awake()
     {
-        playerMovement = GetComponent<PlayerMovement>();
+        playerMovement = GetComponent<Mover>();
 
     }
 

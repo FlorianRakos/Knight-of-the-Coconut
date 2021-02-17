@@ -13,28 +13,33 @@ namespace RPG.Combat
 
         float timeSinceLastAttack = 0f;
 
-        Transform target;
-        PlayerMovement playerMovement;
+        Health target;
+        Mover playerMovement;
 
         private void Awake() {
-            playerMovement = GetComponent<PlayerMovement>();
+            playerMovement = GetComponent<Mover>();
         }
 
         private void Update() {
             timeSinceLastAttack += Time.deltaTime;
             
             if (target != null) {
-                float distanceToTarget = Vector3.Distance(transform.position, target.position);
+                if (!target.IsAlive()) return;
+
+
+
+                float distanceToTarget = Vector3.Distance(transform.position, target.transform.position);
 
                 if (distanceToTarget > weaponRange) {
-                    playerMovement.MoveTo(target.position);
+                    playerMovement.MoveTo(target.transform.position);
                 } else
                 {
+                    
                     playerMovement.Cancel();
                     if(timeSinceLastAttack > timeBetweenAttacks)
                     {
                      AttackBehaviour();
-                     timeSinceLastAttack = 0f;   
+ 
                     }
                     
                 }
@@ -45,23 +50,25 @@ namespace RPG.Combat
 
         private void AttackBehaviour()
         {
-
+            transform.LookAt(target.transform);
             GetComponentInChildren<Animator>().SetTrigger("attack");
+            timeSinceLastAttack = 0f;              
         }
 
         public void Attack(CombatTarget combatTarget){
             GetComponent<ActionScheduler>().StartAction(this);
-            target = combatTarget.transform; 
+            target = combatTarget.GetComponent<Health>(); 
         }
 
         public void Cancel() {
-            target = null;
+            GetComponent<Animator>().SetTrigger("stopAttack");
+            target = null;            
         }
 
         // Animation Event
         private void Hit()
         {
-            if(target != null) target.GetComponent<Health>().TakeDamage(weaponDamage);
+            if(target != null) target.TakeDamage(weaponDamage);
         }
 
     }

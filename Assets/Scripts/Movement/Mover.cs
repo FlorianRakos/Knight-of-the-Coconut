@@ -8,7 +8,7 @@ using RPG.Core;
 
 namespace RPG.Movement
 {
-    public class PlayerMovement : MonoBehaviour, IAction
+    public class Mover : MonoBehaviour, IAction
     {   
         NavMeshAgent navMeshAgent;
 
@@ -19,7 +19,7 @@ namespace RPG.Movement
 
         void Update()
         {
-            UpdateAnimator();        
+            UpdateAnimator();      
         }
 
 

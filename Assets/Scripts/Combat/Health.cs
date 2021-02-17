@@ -3,13 +3,27 @@ using UnityEngine;
 namespace RPG.Combat
 {
     
+    
     public class Health : MonoBehaviour {
-        [SerializeField] float health = 100f;
+        [SerializeField] float healthPoints = 100f;
+
+        bool isAlive = true;
+
+        public bool IsAlive(){
+            return isAlive;
+        }
 
         public void TakeDamage(float damage)
         {
-            health = Mathf.Max(health - damage, 0);
-            print(health);
+            healthPoints = Mathf.Max(healthPoints - damage, 0);
+            print(healthPoints);
+            if (healthPoints <= 0f && isAlive) DyingBehaviour();
+        }
+
+        private void DyingBehaviour()
+        {
+            isAlive = false;
+            GetComponent<Animator>().SetTrigger("die");
         }
     }
 }
