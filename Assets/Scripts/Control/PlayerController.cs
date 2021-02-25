@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using RPG.Movement;
 using RPG.Combat;
+using RPG.Core;
 using System;
 
 namespace RPG.Control
@@ -11,17 +12,19 @@ namespace RPG.Control
     {
 
     Mover playerMovement;
+    Health health;
 
 
     void Awake()
     {
         playerMovement = GetComponent<Mover>();
-
+        health = GetComponent<Health>();
     }
 
 
     void Update()
         {
+            if(!health.IsAlive()) return;
             if(UpdateCombat()) return;            
             if(UpdateMovement()) return;
             print("cant move here");
@@ -33,11 +36,12 @@ namespace RPG.Control
 
             foreach(RaycastHit hit in hits) {
                 CombatTarget target = hit.transform.GetComponent<CombatTarget>();
-
                 if(target == null) continue;
 
-                if(Input.GetMouseButtonDown(0)) {
-                    GetComponent<Fighter>().Attack(target);
+                if(!GetComponent<Fighter>().CanAttack(target.gameObject)) continue;
+
+                if(Input.GetMouseButton(0)) {
+                    GetComponent<Fighter>().Attack(target.gameObject);
                 }
                     return true;                                
             }
@@ -54,7 +58,7 @@ namespace RPG.Control
                 Vector3 destination = hit.point;
                 if (Input.GetMouseButton(0))
                 {
-                    playerMovement.StartMoveAction(destination);
+                    playerMovement.StartMoveAction(destination, 1f);
                     
                 }
                 return true;

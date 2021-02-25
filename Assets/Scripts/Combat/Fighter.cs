@@ -11,7 +11,7 @@ namespace RPG.Combat
         [SerializeField] float weaponDamage = 40f;
         [SerializeField] float timeBetweenAttacks = 1f;
 
-        float timeSinceLastAttack = 0f;
+        float timeSinceLastAttack = Mathf.Infinity;
 
         Health target;
         Mover playerMovement;
@@ -31,7 +31,7 @@ namespace RPG.Combat
                 float distanceToTarget = Vector3.Distance(transform.position, target.transform.position);
 
                 if (distanceToTarget > weaponRange) {
-                    playerMovement.MoveTo(target.transform.position);
+                    playerMovement.MoveTo(target.transform.position, 1f);
                 } else
                 {
                     
@@ -51,18 +51,44 @@ namespace RPG.Combat
         private void AttackBehaviour()
         {
             transform.LookAt(target.transform);
-            GetComponentInChildren<Animator>().SetTrigger("attack");
-            timeSinceLastAttack = 0f;              
+            TriggerAttack();
+            timeSinceLastAttack = 0f;
         }
 
-        public void Attack(CombatTarget combatTarget){
+        private void TriggerAttack()
+        {
+            GetComponentInChildren<Animator>().ResetTrigger("stopAttack");
+            GetComponentInChildren<Animator>().SetTrigger("attack");
+        }
+
+        public bool CanAttack(GameObject combatTarget){
+            if (combatTarget == null) return false;
+            Health targetToCheck = combatTarget.GetComponent<Health>();
+
+            // bool test = targetToCheck != null && targetToCheck.IsAlive();
+            // print(combatTarget);
+            // print(test + "can attack");
+
+            return targetToCheck != null && targetToCheck.IsAlive();
+        }
+
+        public void Attack(GameObject combatTarget){
             GetComponent<ActionScheduler>().StartAction(this);
             target = combatTarget.GetComponent<Health>(); 
         }
 
-        public void Cancel() {
+        public void Cancel()
+        {
+            StopAttack();
+
+            print("attack canceld");
+            target = null;
+        }
+
+        private void StopAttack()
+        {
+            GetComponent<Animator>().ResetTrigger("attack");
             GetComponent<Animator>().SetTrigger("stopAttack");
-            target = null;            
         }
 
         // Animation Event

@@ -1,6 +1,8 @@
 using UnityEngine;
 
-namespace RPG.Combat
+using RPG.Control;
+
+namespace RPG.Core
 {
     
     
@@ -24,6 +26,11 @@ namespace RPG.Combat
         {
             isAlive = false;
             GetComponent<Animator>().SetTrigger("die");
+            GetComponent<ActionScheduler>().CancelCurrentAction();
+
+            
         }
+
+
     }
 }

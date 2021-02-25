@@ -26,6 +26,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83264f68df1c63043b5baae5cb5fbb24, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1797865216134978249
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8238060986415049435}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b579b433666e6149a415793477b091b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  chaseDistance: 5
+  suspicionTime: 5
+  patrolPath: {fileID: 0}
+  waypointTolerance: 1
+  waypointDwellTime: 3
 --- !u!1001 &4025506609692800794
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -90,6 +107,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 310159903, guid: 0b9a95b80dbaa6c41a20acca9d9e5d44, type: 3}
+      propertyPath: m_Speed
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1647339810, guid: 0b9a95b80dbaa6c41a20acca9d9e5d44, type: 3}
+      propertyPath: weaponDamage
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1647339810, guid: 0b9a95b80dbaa6c41a20acca9d9e5d44, type: 3}
+      propertyPath: timeBetweenAttacks
+      value: 1.2
+      objectReference: {fileID: 0}
     - target: {fileID: 2064333114949200753, guid: 0b9a95b80dbaa6c41a20acca9d9e5d44,
         type: 3}
       propertyPath: m_Name
