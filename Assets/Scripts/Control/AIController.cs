@@ -73,7 +73,7 @@ namespace RPG.Control {
         {
             timeSinceLastSawPlayer += Time.deltaTime;
             timeOnWaypoint += Time.deltaTime;
-            print(timeOnWaypoint + "time on waypoint");
+            //print(timeOnWaypoint + "time on waypoint");
         }
 
         private void PatrolBehaviour()

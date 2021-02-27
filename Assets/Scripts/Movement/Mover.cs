@@ -59,6 +59,8 @@ namespace RPG.Movement
 
             GetComponentInChildren<Animator>().SetFloat("forwardSpeed", speed);
 
+
+
         }
     }
 }
