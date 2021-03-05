@@ -27,7 +27,7 @@ namespace RPG.Control
             if(!health.IsAlive()) return;
             if(UpdateCombat()) return;            
             if(UpdateMovement()) return;
-            print("cant move here");
+            //print("cant move here");
         }
 
         private bool UpdateCombat()
