@@ -22,6 +22,7 @@ public class CinematicTrigger : MonoBehaviour, ISaveable
             //print("true");
             GetComponent<PlayableDirector>().Play();
             wasTriggered = true;
+            GetComponent<Collider>().enabled = false;
         }
         }
 
@@ -33,6 +34,11 @@ public class CinematicTrigger : MonoBehaviour, ISaveable
         void ISaveable.RestoreState(object state)
         {
             wasTriggered = (bool)state;
+            if(wasTriggered) {
+                GetComponent<Collider>().enabled = false;
+            } else {
+                GetComponent<Collider>().enabled = true;
+            }
         }
 }
 }

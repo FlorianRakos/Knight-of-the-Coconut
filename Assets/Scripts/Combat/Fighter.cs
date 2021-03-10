@@ -19,7 +19,6 @@ namespace RPG.Combat
 
         private void Awake() {
             playerMovement = GetComponent<Mover>();
-            print(currentWeapon);
         }
 
         private void Start()
@@ -110,7 +109,16 @@ namespace RPG.Combat
         // Animation Event
         private void Hit()
         {
-            if(target != null) target.TakeDamage(currentWeapon.GetDamage());
+            if(target == null) return;
+            if(currentWeapon.HasProjectile()) currentWeapon.LaunchProjectile(rightHandTransform, leftHandTransform, target);
+            else target.TakeDamage(currentWeapon.GetDamage());
+            
+        }
+
+        private void Shoot() 
+        {
+            Hit();
+            print("shoot event");
         }
 
     }

@@ -27,7 +27,7 @@ namespace RPG.Core
             isAlive = false;
             GetComponent<Animator>().SetTrigger("die");
             GetComponent<ActionScheduler>().CancelCurrentAction();
-
+            GetComponent<CapsuleCollider>().enabled = false;
 
             
         }
