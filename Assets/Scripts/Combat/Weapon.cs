@@ -43,12 +43,16 @@ namespace RPG.Combat {
         {
             DestroyOldWeapon(rightHand, leftHand);
 
-            if (equippedPrefab == null) return;
-            Transform handTransform = GetHandTransform(rightHand, leftHand);
-            GameObject weapon = Instantiate(equippedPrefab, handTransform);
-            weapon.name = weaponName;
+            if (equippedPrefab != null) {
+
+                Transform handTransform = GetHandTransform(rightHand, leftHand);
+                GameObject weapon = Instantiate(equippedPrefab, handTransform);
+                weapon.name = weaponName;                
+            }
+
 
             if (animatorOverride == null) return;
+            Debug.Log(animator.runtimeAnimatorController);
             animator.runtimeAnimatorController = animatorOverride;
 
         }

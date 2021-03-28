@@ -118,7 +118,7 @@ namespace RPG.Combat
         private void Shoot() 
         {
             Hit();
-            print("shoot event");
+            //print("shoot event");
         }
 
     }

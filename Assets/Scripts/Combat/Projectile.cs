@@ -12,6 +12,10 @@ namespace RPG.Combat
 
     [SerializeField] float projectileSpeed = 1f;
     [SerializeField] bool findsTarget = false;
+    [SerializeField] GameObject hitFX;
+    [SerializeField] float expiringTimer = .5f;
+
+    float startTime = 0f;
 
     Health target;
     float damage = 0f;
@@ -28,6 +32,10 @@ namespace RPG.Combat
         if(findsTarget && target.IsAlive()) {
             transform.LookAt(GetAimLocation()); 
         }
+
+        startTime += Time.deltaTime;
+        if(startTime >= expiringTimer) Destroy(gameObject);
+
     }
 
     private Vector3 GetAimLocation()
@@ -48,7 +56,14 @@ namespace RPG.Combat
         //print("projectile collision with" + other.name);
         if(other.GetComponent<Health>()!= null) {
             other.GetComponent<Health>().TakeDamage(damage);
+            
+            if (hitFX != null) {
+                GameObject impact = Instantiate(hitFX, transform.position, Quaternion.identity);
+                Destroy(impact, 5f);
+        } 
         }
+
+        
         Destroy(gameObject);
 
     }
