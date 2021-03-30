@@ -38,7 +38,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b579b433666e6149a415793477b091b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chaseDistance: 5
+  chaseDistance: 6
   suspicionTime: 5
   patrolPath: {fileID: 0}
   waypointTolerance: 1
@@ -144,7 +144,7 @@ PrefabInstance:
     - target: {fileID: 1647339810, guid: 0b9a95b80dbaa6c41a20acca9d9e5d44, type: 3}
       propertyPath: defaultWeapon
       value: 
-      objectReference: {fileID: 11400000, guid: 6623fdd08c2d9094b88df641492e3e2f,
+      objectReference: {fileID: 11400000, guid: 246f205f90ad15e4cbb070b6613d2082,
         type: 2}
     - target: {fileID: 1647339810, guid: 0b9a95b80dbaa6c41a20acca9d9e5d44, type: 3}
       propertyPath: rightHandTransform
