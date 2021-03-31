@@ -14,6 +14,20 @@ namespace RPG.Control
     Mover playerMovement;
     Health health;
 
+    enum CursorType {
+        None,
+        Movement,
+        Combat     
+    }
+
+    [System.Serializable]
+    struct CursorMapping {
+        public CursorType type;
+        public Texture2D texture;
+        public Vector2 hotspot;
+        }
+
+    [SerializeField] CursorMapping[] cursorMapping = null;
 
     void Awake()
     {
@@ -27,6 +41,7 @@ namespace RPG.Control
             if(!health.IsAlive()) return;
             if(UpdateCombat()) return;            
             if(UpdateMovement()) return;
+            SetCursor(CursorType.None);
             //print("cant move here");
         }
 
@@ -43,10 +58,13 @@ namespace RPG.Control
                 if(Input.GetMouseButton(0)) {
                     GetComponent<Fighter>().Attack(target.gameObject);
                 }
-                    return true;                                
+                SetCursor(CursorType.Combat);
+                return true;                                
             }
             return false;
         }
+
+
 
         private bool UpdateMovement()
         {
@@ -61,6 +79,7 @@ namespace RPG.Control
                     playerMovement.StartMoveAction(destination, 1f);
                     
                 }
+                SetCursor(CursorType.Movement);
                 return true;
 
             }
@@ -68,9 +87,26 @@ namespace RPG.Control
 
         }
 
+        private void SetCursor(CursorType cursorType) {
+            CursorMapping cursorMapping = GetCursorMapping(cursorType);
+            Cursor.SetCursor(cursorMapping.texture, cursorMapping.hotspot, CursorMode.Auto);
+        }
+
+        private CursorMapping GetCursorMapping(CursorType type) {
+            foreach (CursorMapping mapping in cursorMapping)
+            {
+                if(mapping.type == type)
+                {
+                    return mapping;
+                }
+            }
+            return cursorMapping[0];
+        }
+
         private static Ray GetMouseRay()
         {
             return Camera.main.ScreenPointToRay(Input.mousePosition);
         }
+
     }
     }
