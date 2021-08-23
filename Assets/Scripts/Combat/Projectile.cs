@@ -13,7 +13,7 @@ namespace RPG.Combat
     [SerializeField] float projectileSpeed = 1f;
     [SerializeField] bool findsTarget = false;
     [SerializeField] GameObject hitFX;
-    [SerializeField] float expiringTimer = .5f;
+    [SerializeField] float expiringTimer = 5f;
 
     float startTime = 0f;
 
@@ -56,6 +56,10 @@ namespace RPG.Combat
         //print("projectile collision with" + other.name);
         if(other.GetComponent<Health>()!= null) {
             other.GetComponent<Health>().TakeDamage(damage);
+            if (other.GetComponent<AIController>() != null) {
+                AIController entity = other.GetComponent<AIController>();
+                entity.GettingAttacked();
+            }
             
             if (hitFX != null) {
                 GameObject impact = Instantiate(hitFX, transform.position, Quaternion.identity);
@@ -63,8 +67,8 @@ namespace RPG.Combat
         } 
         }
 
-        
-        Destroy(gameObject);
+        if (other.GetComponent<Projectile>() == null) Destroy(gameObject);
+
 
     }
 

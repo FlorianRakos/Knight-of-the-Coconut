@@ -29,6 +29,8 @@ namespace RPG.Control {
         float timeSinceLastSawPlayer = Mathf.Infinity;
         float timeOnWaypoint = Mathf.Infinity;
         int currentWaypointIndex = 0;
+
+        bool wasAttacked = false;
         
 
 
@@ -51,7 +53,7 @@ namespace RPG.Control {
                 return;
             }
 
-            if (InAttackRange() && fighter.CanAttack(player))
+            if (InAttackRange() && fighter.CanAttack(player) || wasAttacked)
             {
                 AttackBehaviour();
             }
@@ -67,6 +69,10 @@ namespace RPG.Control {
 
             UpdateTimers();
 
+        }
+
+        public void GettingAttacked () {
+            wasAttacked = true;
         }
 
         private void UpdateTimers()

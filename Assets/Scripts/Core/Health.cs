@@ -18,7 +18,6 @@ namespace RPG.Core
         public void TakeDamage(float damage)
         {
             healthPoints = Mathf.Max(healthPoints - damage, 0);
-            print(healthPoints);
             if (healthPoints <= 0f && isAlive) DyingBehaviour();
         }
 
@@ -27,9 +26,7 @@ namespace RPG.Core
             isAlive = false;
             GetComponent<Animator>().SetTrigger("die");
             GetComponent<ActionScheduler>().CancelCurrentAction();
-            GetComponent<CapsuleCollider>().enabled = false;
-
-            
+            GetComponent<CapsuleCollider>().enabled = false;            
         }
 
         object ISaveable.CaptureState()
